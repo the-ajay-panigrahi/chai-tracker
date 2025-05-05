@@ -2,6 +2,7 @@ const Hero = () => {
   return (
     <section className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white px-4 py-8 transition-all duration-500 ease-in-out relative overflow-hidden min-h-screen">
       {/* Background blur effects */}
+      <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-500 rounded-full opacity-30 blur-3xl animate-pulse z-20"></div>
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-600 rounded-full opacity-20 blur-2xl animate-pulse z-0"></div>
 
       {/* Heading */}

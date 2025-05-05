@@ -22,7 +22,6 @@ const Layout = (props) => {
           Signup
         </button>
       </div>
-      <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-500 rounded-full opacity-30 blur-3xl animate-pulse z-0"></div>
     </header>
   );
 
