@@ -1,8 +1,8 @@
 const Layout = (props) => {
   const { children } = props;
-  {
-    console.log(children);
-  }
+  // {
+  //   console.log(children);
+  // }
 
   const header = (
     <header className="bg-gray-900 text-white shadow sticky top-0 z-11">

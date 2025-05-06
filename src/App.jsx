@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import Statistics from "./components/Statistics";
 
 function App() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   const authenticatedContent = (
     <>

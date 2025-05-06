@@ -54,7 +54,7 @@ const Hero = () => {
           <h3 className="text-lg font-semibold">Did you know?</h3>
         </div>
         <h5 className="text-lg sm:text-xl font-bold text-white mb-2 animate-fade-in">
-          Caffeine&apos; half-life is about 5 hours!
+          Caffeine&apos;s half-life is about 5 hours!
         </h5>
         <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
           After 5 hours, half the caffeine from your chai is still in your
