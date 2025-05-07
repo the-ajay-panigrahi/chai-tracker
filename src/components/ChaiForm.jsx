@@ -8,7 +8,7 @@ const ChaiForm = () => {
   const [min, setMin] = useState(0);
 
   function handleSubmitChaiForm() {
-    console.log(selectedChai, chaiCost, hour, min);
+    // console.log(selectedChai, chaiCost, hour, min);
   }
 
   return (

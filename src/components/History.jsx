@@ -36,11 +36,10 @@ const History = () => {
               const tooltip = `${chai.name} | ${timeSince} | ₹${chai.cost} | ${remaining}mg / ${original}mg`;
 
               return (
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center" key={index}>
                   <img
                     src="/chai-logo.png"
                     alt="Chai"
-                    key={index}
                     title={tooltip}
                     className="rounded-xl p-2 shadow-lg hover:shadow-lg hover:scale-150 transition-transform duration-200 cursor-pointer w-20 h-20 object-contain "
                   />
