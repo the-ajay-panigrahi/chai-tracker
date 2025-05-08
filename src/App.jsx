@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import Statistics from "./components/Statistics";
 
 function App() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   const authenticatedContent = (
     <>
@@ -17,7 +17,7 @@ function App() {
   return (
     <Layout>
       <Hero />
-      <ChaiForm />
+      <ChaiForm isAuthenticated={isAuthenticated} />
       {isAuthenticated && authenticatedContent}
     </Layout>
   );

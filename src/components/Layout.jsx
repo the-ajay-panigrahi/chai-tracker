@@ -1,8 +1,11 @@
+import { useState } from "react";
+import Authentication from "./Authentication";
+import Modal from "./Modal";
+
 const Layout = (props) => {
   const { children } = props;
-  // {
-  //   console.log(children);
-  // }
+
+  const [showModal, setShowModal] = useState(false);
 
   const header = (
     <header className="bg-gray-900 text-white shadow sticky top-0 z-11">
@@ -17,9 +20,14 @@ const Layout = (props) => {
           Tracker
         </h1>
 
-        {/* Signup Button */}
-        <button className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer">
-          Signup
+        {/* Login Button */}
+        <button
+          onClick={() => {
+            setShowModal(true);
+          }}
+          className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer"
+        >
+          Login
         </button>
       </div>
     </header>
@@ -50,11 +58,22 @@ const Layout = (props) => {
   );
 
   return (
-    <div className="relative">
-      {header}
-      <main>{children}</main>
-      {footer}
-    </div>
+    <>
+      {showModal && (
+        <Modal
+          handleCloseModal={() => {
+            setShowModal(false);
+          }}
+        >
+          <Authentication />
+        </Modal>
+      )}
+      <div className="relative">
+        {header}
+        <main>{children}</main>
+        {footer}
+      </div>
+    </>
   );
 };
 
