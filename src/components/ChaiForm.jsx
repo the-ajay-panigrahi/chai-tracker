@@ -41,7 +41,7 @@ const ChaiForm = (props) => {
         cost: chaiCost,
       };
       newGlobalData[timestamp] = newData;
-      console.log(timestamp, selectedChai, chaiCost);
+      // console.log(timestamp, selectedChai, chaiCost);
 
       // update the global state
       setGlobalData(newGlobalData);

@@ -50,11 +50,11 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("CURRENT USER: ", user);
+      // console.log("CURRENT USER: ", user);
       setGlobalUser(user);
       // if there's no user, empty the user state and return from this listener
       if (!user) {
-        console.log("No active user");
+        // console.log("No active user");
         return;
       }
 
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
         let firebaseData = {};
         if (docSnap.exists()) {
           firebaseData = docSnap.data();
-          console.log("Found user data", firebaseData);
+          // console.log("Found user data", firebaseData);
         }
         setGlobalData(firebaseData);
       } catch (err) {
