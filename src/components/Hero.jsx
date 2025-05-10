@@ -16,7 +16,7 @@ const Hero = () => {
           <Authentication />
         </Modal>
       )}
-      <section className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white px-4 py-8 transition-all duration-500 ease-in-out relative overflow-hidden min-h-screen">
+      <section className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white px-4 pt-8 transition-all duration-500 ease-in-out relative overflow-hidden min-h-screen">
         {/* Background blur effects */}
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-500 rounded-full opacity-30 blur-3xl animate-pulse z-20"></div>
         <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-600 rounded-full opacity-20 blur-2xl animate-pulse z-0"></div>
@@ -77,18 +77,6 @@ const Hero = () => {
             system. So if you sip 100mg now, you&apos;ll still be buzzing on
             50mg 5 hours later.
           </p>
-        </div>
-
-        {/* CTA Button */}
-        <div className="relative z-10 mt-12 flex justify-center">
-          <button
-            onClick={() => {
-              setShowModal(true);
-            }}
-            className="px-6 py-3 bg-orange-500 hover:bg-orange-600 transition-all text-white font-semibold text-lg rounded-full shadow-md hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-300 cursor-pointer"
-          >
-            Get Started
-          </button>
         </div>
       </section>
     </>

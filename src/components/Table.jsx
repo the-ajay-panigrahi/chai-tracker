@@ -1,6 +1,8 @@
-import { chaiConsumptionHistory, getTopThreeTeas } from "../utils";
+import { useAuth } from "../context/AuthContext";
+import { getTopThreeTeas } from "../utils";
 
 const Table = () => {
+  const { globalData } = useAuth();
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm bg-white hover:shadow-md transition-all duration-200">
       <div className="flex items-center gap-2 p-4 border-b border-gray-100 justify-center">
@@ -23,7 +25,7 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className="">
-            {getTopThreeTeas(chaiConsumptionHistory).map((chai, chaiIndex) => (
+            {getTopThreeTeas(globalData).map((chai, chaiIndex) => (
               <tr
                 key={chaiIndex}
                 className="hover:bg-blue-50 transition-colors duration-150"

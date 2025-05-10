@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Authentication from "./Authentication";
 import Modal from "./Modal";
+import { useAuth } from "../context/AuthContext";
 
 const Layout = (props) => {
   const { children } = props;
+  const { globalUser, logout } = useAuth();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -21,14 +23,25 @@ const Layout = (props) => {
         </h1>
 
         {/* Login Button */}
-        <button
-          onClick={() => {
-            setShowModal(true);
-          }}
-          className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer"
-        >
-          Login
-        </button>
+        {globalUser ? (
+          <button
+            onClick={() => {
+              logout();
+            }}
+            className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer"
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setShowModal(true);
+            }}
+            className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer"
+          >
+            Login
+          </button>
+        )}
       </div>
     </header>
   );
@@ -65,7 +78,11 @@ const Layout = (props) => {
             setShowModal(false);
           }}
         >
-          <Authentication />
+          <Authentication
+            handleCloseModal={() => {
+              setShowModal(false);
+            }}
+          />
         </Modal>
       )}
       <div className="relative">

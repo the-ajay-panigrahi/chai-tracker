@@ -1,7 +1,7 @@
+import { useAuth } from "../context/AuthContext";
 import {
   calculateChaiStats,
   calculateCurrentCaffeineLevel,
-  chaiConsumptionHistory,
   statusLevels,
 } from "../utils";
 
@@ -9,8 +9,9 @@ import StatisticCard from "./StatisticsCard";
 import Table from "./Table";
 
 const Statistics = () => {
-  const stats = calculateChaiStats(chaiConsumptionHistory);
-  const caffeineLevel = calculateCurrentCaffeineLevel(chaiConsumptionHistory);
+  const { globalData } = useAuth();
+  const stats = calculateChaiStats(globalData);
+  const caffeineLevel = calculateCurrentCaffeineLevel(globalData);
   const warningLevel =
     caffeineLevel < statusLevels["low"].maxLevel
       ? "low"

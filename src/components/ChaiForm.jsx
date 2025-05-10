@@ -2,6 +2,9 @@ import { useState } from "react";
 import { chaiOptions } from "../utils/index.js";
 import Authentication from "./Authentication.jsx";
 import Modal from "./Modal.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase.js";
 const ChaiForm = (props) => {
   const { isAuthenticated } = props;
   const [showModal, setShowModal] = useState(false);
@@ -10,12 +13,55 @@ const ChaiForm = (props) => {
   const [chaiCost, setChaiCost] = useState(0);
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
+  const { globalData, setGlobalData, globalUser } = useAuth();
 
-  function handleSubmitChaiForm() {
+  async function handleSubmitChaiForm() {
     // console.log(selectedChai, chaiCost, hour, min);
     if (!isAuthenticated) {
       setShowModal(true);
       return;
+    }
+
+    if (!selectedChai) {
+      return;
+    }
+
+    try {
+      // then we're going to create a new data object
+      const newGlobalData = {
+        ...(globalData || {}),
+      };
+
+      const nowTime = Date.now();
+      const timeToSubtract = hour * 60 * 60 * 1000 + min * 60 * 1000;
+      const timestamp = nowTime - timeToSubtract;
+
+      const newData = {
+        name: selectedChai,
+        cost: chaiCost,
+      };
+      newGlobalData[timestamp] = newData;
+      console.log(timestamp, selectedChai, chaiCost);
+
+      // update the global state
+      setGlobalData(newGlobalData);
+
+      // persist the data in the firebase firestore
+      const userRef = doc(db, "users", globalUser.uid);
+      const res = await setDoc(
+        userRef,
+        {
+          [timestamp]: newData,
+        },
+        { merge: true }
+      );
+
+      setSelectedChai(null);
+      setHour(0);
+      setMin(0);
+      setChaiCost(0);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -27,7 +73,11 @@ const ChaiForm = (props) => {
             setShowModal(false);
           }}
         >
-          <Authentication />
+          <Authentication
+            handleCloseModal={() => {
+              setShowModal(false);
+            }}
+          />
         </Modal>
       )}
       <section className="bg-slate-800">

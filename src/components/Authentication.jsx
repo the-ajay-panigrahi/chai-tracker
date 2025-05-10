@@ -1,12 +1,45 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-const Authentication = () => {
+const Authentication = ({ handleCloseModal }) => {
   const [isRegistration, setIsRegistration] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [error, setError] = useState(null);
+
+  const { signup, login } = useAuth();
+
   async function handleAuthentication() {
-    console.log("Submitted");
+    if (
+      !email ||
+      !email.includes("@") ||
+      !password ||
+      password.length < 6 ||
+      isAuthenticating
+    ) {
+      return;
+    }
+
+    try {
+      setIsAuthenticating(true);
+      setError(null);
+
+      if (isRegistration) {
+        // register a user
+        await signup(email, password);
+      } else {
+        // login a user
+        await login(email, password);
+      }
+      handleCloseModal();
+    } catch (err) {
+      console.log(err.message);
+      setError(err.message);
+    } finally {
+      setIsAuthenticating(false);
+    }
   }
 
   return (
@@ -17,7 +50,7 @@ const Authentication = () => {
       <p className="text-center text-lg text-white">
         {isRegistration ? "Create an account!" : "Sign in to your account!"}
       </p>
-
+      {error && <p className="text-white text-center">❌ {error}</p>}
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -37,7 +70,7 @@ const Authentication = () => {
         onClick={handleAuthentication}
         className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-100 hover:scale-[1.02] text-lg cursor-pointer"
       >
-        Submit
+        {isAuthenticating ? "Authenticating..." : "Submit"}
       </button>
 
       <hr className="border-slate-200" />

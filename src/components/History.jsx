@@ -1,11 +1,12 @@
+import { useAuth } from "../context/AuthContext";
 import {
   calculateCurrentCaffeineLevel,
-  chaiConsumptionHistory,
   getCaffeineAmount,
   timeSinceConsumption,
 } from "../utils";
 
 const History = () => {
+  const { globalData } = useAuth();
   return (
     <section className="bg-slate-800 py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -23,10 +24,10 @@ const History = () => {
 
         {/* History Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-          {Object.keys(chaiConsumptionHistory)
+          {Object.keys(globalData)
             .sort((a, b) => b - a)
             .map((utcTime, index) => {
-              const chai = chaiConsumptionHistory[utcTime];
+              const chai = globalData[utcTime];
               const timeSince = timeSinceConsumption(utcTime);
               const original = getCaffeineAmount(chai.name);
               const remaining = calculateCurrentCaffeineLevel({
