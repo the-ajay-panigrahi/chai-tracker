@@ -106,7 +106,6 @@ export function calculateCurrentCaffeineLevel(historyData) {
     return totalCaffeine.toFixed(2)
 }
 
-// Helper function to get caffeine amount based on the tea name
 export function getCaffeineAmount(teaName) {
     const tea = chaiOptions.find(c => c.name === teaName)
     return tea ? tea.caffeine : 0

@@ -17,11 +17,8 @@ const Hero = () => {
         </Modal>
       )}
       <section className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white px-4 pt-8 transition-all duration-500 ease-in-out relative overflow-hidden min-h-screen">
-        {/* Background blur effects */}
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-500 rounded-full opacity-30 blur-3xl animate-pulse z-20"></div>
         <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-600 rounded-full opacity-20 blur-2xl animate-pulse z-0"></div>
-
-        {/* Heading */}
         <h1 className="relative z-10 text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight mb-10 tracking-tight flex justify-center gap-6 items-center flex-col lg:flex-row">
           Welcome to
           <span className="text-orange-500 drop-shadow-[0_0_10px_rgba(255,115,0,0.7)]">
@@ -33,8 +30,6 @@ const Hero = () => {
             alt=""
           />
         </h1>
-
-        {/* Benefits List */}
         <div className="relative z-10 backdrop-blur-md bg-white/5 border border-gray-700 p-6 sm:p-8 rounded-2xl shadow-xl max-w-3xl mx-auto mb-12 transition duration-500 hover:shadow-2xl hover:-translate-y-1 overflow-hidden ">
           <h3 className="text-3xl font-semibold mb-6 text-orange-400 animate-fade-in text-center md:text-left">
             Track your <strong className=" text-white">chai habit</strong> with
@@ -62,8 +57,6 @@ const Hero = () => {
             alt=""
           />
         </div>
-
-        {/* Info Card */}
         <div className="relative z-10 bg-gradient-to-tr from-gray-800 to-gray-700 border border-gray-600 p-6 sm:p-8 rounded-2xl shadow-lg max-w-3xl mx-auto hover:shadow-2xl hover:scale-105 transition duration-500 ease-in-out cursor-pointer">
           <div className="flex items-center gap-3 text-blue-400 mb-3">
             <span className="text-xl animate-pulse">ℹ️</span>

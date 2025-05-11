@@ -16,7 +16,6 @@ const ChaiForm = (props) => {
   const { globalData, setGlobalData, globalUser } = useAuth();
 
   async function handleSubmitChaiForm() {
-    // console.log(selectedChai, chaiCost, hour, min);
     if (!isAuthenticated) {
       setShowModal(true);
       return;
@@ -27,7 +26,6 @@ const ChaiForm = (props) => {
     }
 
     try {
-      // then we're going to create a new data object
       const newGlobalData = {
         ...(globalData || {}),
       };
@@ -41,12 +39,9 @@ const ChaiForm = (props) => {
         cost: chaiCost,
       };
       newGlobalData[timestamp] = newData;
-      // console.log(timestamp, selectedChai, chaiCost);
 
-      // update the global state
       setGlobalData(newGlobalData);
 
-      // persist the data in the firebase firestore
       const userRef = doc(db, "users", globalUser.uid);
       const res = await setDoc(
         userRef,
@@ -82,13 +77,11 @@ const ChaiForm = (props) => {
       )}
       <section className="bg-slate-800">
         <div className="max-w-6xl mx-auto text-white p-8  space-y-6">
-          {/* Header */}
           <div className="flex items-center space-x-2 mb-6 mt-2">
             <span className="text-2xl text-orange-400">✏️</span>
             <h2 className="text-3xl font-semibold">Start Tracking Today</h2>
           </div>
 
-          {/* Chai Type Grid */}
           <div>
             <h4 className="mb-2 text-xl font-medium">Select chai type</h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -146,7 +139,6 @@ const ChaiForm = (props) => {
             )}
           </div>
 
-          {/* Cost */}
           <div>
             <h4 className="mb-2 text-xl font-medium">Add the cost (₹)</h4>
             <input
@@ -160,7 +152,6 @@ const ChaiForm = (props) => {
             />
           </div>
 
-          {/* Time Since Consumption */}
           <div>
             <h4 className="mb-2 text-xl font-medium">Time since consumption</h4>
             <div className="flex gap-4">
@@ -204,7 +195,6 @@ const ChaiForm = (props) => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <button
             onClick={handleSubmitChaiForm}
             className="w-full h-12 text-xl cursor-pointer bg-orange-500 hover:bg-orange-600 transition text-white font-semibold py-2 rounded-full shadow"

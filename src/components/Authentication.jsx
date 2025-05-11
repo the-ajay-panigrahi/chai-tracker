@@ -27,10 +27,8 @@ const Authentication = ({ handleCloseModal }) => {
       setError(null);
 
       if (isRegistration) {
-        // register a user
         await signup(email, password);
       } else {
-        // login a user
         await login(email, password);
       }
       handleCloseModal();

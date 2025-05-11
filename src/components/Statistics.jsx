@@ -22,13 +22,11 @@ const Statistics = () => {
   return (
     <section className="bg-slate-700 py-10 text-white">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Section Header */}
         <div className="mb-6 flex items-center gap-2">
           <span className="text-2xl">📊</span>
           <h2 className="text-3xl font-bold text-white">Statistic's</h2>
         </div>
 
-        {/* Stat Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <StatisticCard fullWidth title="Active Caffeine Level">
             <div className="flex items-center gap-3">
@@ -101,8 +99,6 @@ const Statistics = () => {
             </div>
           </StatisticCard>
         </div>
-
-        {/* Table */}
         <div className="mt-10">
           <Table />
         </div>
