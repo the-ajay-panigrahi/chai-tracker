@@ -1,5 +1,15 @@
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+
 const App = () => {
-  return <h1 className="text-3xl text-center bg-orange-500">Haanji..</h1>;
+  return (
+    <>
+      <Header />
+      <Hero />
+      <Footer />
+    </>
+  );
 };
 
 export default App;
