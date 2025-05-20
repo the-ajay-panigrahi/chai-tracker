@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-400">
+    <footer className="bg-gray-950 text-gray-400">
       <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8 flex flex-col sm:flex-row justify-between items-center">
         <span className="text-sm sm:text-base">
           &copy; {new Date().getFullYear()} Chai Tracker
