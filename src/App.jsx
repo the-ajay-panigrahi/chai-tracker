@@ -6,13 +6,19 @@ import History from "./components/History";
 import Statistics from "./components/Statistics";
 
 const App = () => {
+  const isAuthenticated = false;
+
   return (
     <>
       <Header />
       <Hero />
       <ChaiForm />
-      <Statistics/>
-      <History/>
+      {isAuthenticated && (
+        <>
+          <Statistics />
+          <History />
+        </>
+      )}
       <Footer />
     </>
   );

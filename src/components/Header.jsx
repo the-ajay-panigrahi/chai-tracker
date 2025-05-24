@@ -1,21 +1,37 @@
-const Header = () => {
-  return (
-    <header className="bg-gray-900 text-white shadow sticky top-0 z-11">
-      <div className="max-w-6xl mx-auto flex justify-between items-center px-4 py-3 sm:py-4">
-        <h1 className="text-xl sm:text-3xl font-bold text-orange-400 flex gap-2">
-          <img
-            src="/chai-logo.png"
-            className="w-5 sm:w-10 object-contain hover:scale-110 cursor-pointer transition-all duration-200"
-            alt=""
-          />
-          Tracker
-        </h1>
+import { useState } from "react";
+import AuthModal from "./AuthModal";
 
-        <button className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer">
-          Login
-        </button>
-      </div>
-    </header>
+const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      {isModalOpen && (
+        <AuthModal handleCloseModal={() => setIsModalOpen(false)} />
+      )}
+
+      <header className="bg-gray-900 text-white shadow sticky top-0 z-11">
+        <div className="max-w-6xl mx-auto flex justify-between items-center px-4 py-3 sm:py-4">
+          <h1 className="text-xl sm:text-3xl font-bold text-orange-400 flex gap-2">
+            <img
+              src="/chai-logo.png"
+              className="w-5 sm:w-10 object-contain hover:scale-110 cursor-pointer transition-all duration-200"
+              alt=""
+            />
+            Tracker
+          </h1>
+
+          <button
+            className="bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-shadow shadow-sm hover:shadow-md cursor-pointer"
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
+            Login
+          </button>
+        </div>
+      </header>
+    </>
   );
 };
 
