@@ -8,14 +8,15 @@ import Statistics from "./components/Statistics";
 import { AuthContext } from "./utils/AuthContext";
 
 const App = () => {
-  const { isAuthenticated } = useContext(AuthContext);
-
+  const { isAuthenticated, globalData } = useContext(AuthContext);
+  const dataExists =
+    isAuthenticated && globalData && Object.keys(globalData).length > 0;
   return (
     <>
       <Header />
       <Hero />
       <ChaiForm />
-      {isAuthenticated && (
+      {dataExists && (
         <>
           <Statistics />
           <History />

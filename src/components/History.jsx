@@ -1,18 +1,20 @@
 import { useState } from "react";
 import {
   calculateCurrentCaffeineLevel,
-  chaiConsumptionHistory,
   getCaffeineAmount,
   timeSinceConsumption,
 } from "../utils";
 
 import ChaiInfoModal from "../components/ChaiInfoModal";
+import { useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 
 const History = () => {
   const [selectedChai, setSelectedChai] = useState(null);
+  const { globalData } = useContext(AuthContext);
 
   const handleChaiClick = (utcTime) => {
-    const chai = chaiConsumptionHistory[utcTime];
+    const chai = globalData[utcTime];
     const timeSince = timeSinceConsumption(utcTime);
     const original = getCaffeineAmount(chai.name);
     const remaining = calculateCurrentCaffeineLevel({ [utcTime]: chai });
@@ -29,7 +31,6 @@ const History = () => {
   return (
     <section className="bg-slate-800 py-10 sm:py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-    
         <div className="flex items-center justify-center sm:justify-start gap-3 mb-6">
           <span className="text-2xl sm:text-3xl">🕒</span>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight text-center sm:text-left">
@@ -42,7 +43,7 @@ const History = () => {
         </p>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6 justify-items-center">
-          {Object.keys(chaiConsumptionHistory)
+          {Object.keys(globalData)
             .sort((a, b) => b - a)
             .map((utcTime, index) => (
               <div

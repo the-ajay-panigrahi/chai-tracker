@@ -1,15 +1,17 @@
+import { useContext } from "react";
 import {
   calculateChaiStats,
   calculateCurrentCaffeineLevel,
   statusLevels,
-  chaiConsumptionHistory,
 } from "../utils/index.js";
 
 import Table from "./Table";
+import { AuthContext } from "../utils/AuthContext.jsx";
 
 const Statistics = () => {
-  const stats = calculateChaiStats(chaiConsumptionHistory);
-  const caffeineLevel = calculateCurrentCaffeineLevel(chaiConsumptionHistory);
+  const { globalData } = useContext(AuthContext);
+  const stats = calculateChaiStats(globalData);
+  const caffeineLevel = calculateCurrentCaffeineLevel(globalData);
   const warningLevel =
     caffeineLevel < statusLevels["low"].maxLevel
       ? "low"
@@ -27,7 +29,6 @@ const Statistics = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-           
             <div className="col-span-full rounded-xl bg-white p-5 shadow-sm border border-gray-200 flex flex-col gap-2 group hover:shadow-lg hover:border-blue-300 hover:scale-[1.02] transition-all duration-200 cursor-pointer">
               <h4 className="text-lg text-gray-500 group-hover:text-orange-600 font-semibold transition-colors duration-200">
                 Active Caffeine Level

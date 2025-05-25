@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { chaiOptions } from "../utils/index.js";
 import AuthModal from "./AuthModal.jsx";
+import { db } from "../../firebase.js";
+import { doc, setDoc } from "firebase/firestore";
+import { AuthContext } from "../utils/AuthContext.jsx";
 const ChaiForm = () => {
   const [selectedChai, setSelectedChai] = useState(null);
   const [showChaiTypes, setShowChaiTypes] = useState(false);
@@ -8,10 +11,52 @@ const ChaiForm = () => {
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isAuthenticated, globalData, setGlobalData, currentUser } =
+    useContext(AuthContext);
 
-  const handleSubmitChaiForm = () => {
-    console.log(selectedChai, chaiCost, hour, min);
-  };
+  async function handleSubmitChaiForm() {
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+      return;
+    }
+
+    if (!selectedChai) {
+      return;
+    }
+
+    try {
+      const newGlobalData = {
+        ...(globalData || {}),
+      };
+
+      const nowTime = Date.now();
+      const timeToSubtract = hour * 60 * 60 * 1000 + min * 60 * 1000;
+      const timestamp = nowTime - timeToSubtract;
+
+      const newData = {
+        name: selectedChai,
+        cost: chaiCost,
+      };
+      newGlobalData[timestamp] = newData;
+      setGlobalData(newGlobalData)
+      
+      const userRef = doc(db, "users", currentUser.uid);
+      await setDoc(
+        userRef,
+        {
+          [timestamp]: newData,
+        },
+        { merge: true }
+      );
+
+      setSelectedChai(null);
+      setHour(0);
+      setMin(0);
+      setChaiCost(0);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
 
   return (
     <>
@@ -141,9 +186,6 @@ const ChaiForm = () => {
           <button
             onClick={handleSubmitChaiForm}
             className="w-full h-12 text-xl cursor-pointer bg-orange-500 hover:bg-orange-600 transition text-white font-semibold py-2 rounded-full shadow"
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
           >
             Add Entry
           </button>
