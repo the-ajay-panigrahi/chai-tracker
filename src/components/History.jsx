@@ -29,16 +29,16 @@ const History = () => {
   };
 
   return (
-    <section className="bg-slate-800 py-10 sm:py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="bg-gray-50 py-10 sm:py-12 transition-colors duration-300 dark:bg-gray-900">
+      <div className="max-w-screen-md mx-auto px-4 sm:px-6 md:max-w-[700px]">
         <div className="flex items-center justify-center sm:justify-start gap-3 mb-6">
-          <span className="text-2xl sm:text-3xl">🕒</span>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight text-center sm:text-left">
+          <i className="fas fa-history text-2xl sm:text-3xl text-orange-500 dark:text-orange-400"></i>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight text-center sm:text-left dark:text-white">
             Chai Consumption History
           </h2>
         </div>
 
-        <p className="text-base sm:text-lg text-slate-300 mb-8 italic text-center sm:text-left">
+        <p className="text-base sm:text-lg text-gray-600 mb-8 italic text-center sm:text-left dark:text-gray-300">
           Click on any cup to view caffeine details and cost breakdown.
         </p>
 
@@ -54,7 +54,8 @@ const History = () => {
                 <img
                   src="/chai-logo.png"
                   alt="Chai"
-                  className="rounded-2xl p-2 bg-white shadow-md hover:shadow-orange-400 hover:scale-105 transition-all duration-300 cursor-pointer w-20 h-20 object-contain"
+                  className="rounded-2xl p-2 bg-white shadow-md hover:shadow-orange-500 hover:scale-105 transition-all duration-300 cursor-pointer w-20 h-20 object-contain
+                             dark:bg-gray-800 dark:shadow-sm dark:hover:shadow-orange-400"
                 />
               </div>
             ))}

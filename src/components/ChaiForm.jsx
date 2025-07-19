@@ -38,8 +38,8 @@ const ChaiForm = () => {
         cost: chaiCost,
       };
       newGlobalData[timestamp] = newData;
-      setGlobalData(newGlobalData)
-      
+      setGlobalData(newGlobalData);
+
       const userRef = doc(db, "users", currentUser.uid);
       await setDoc(
         userRef,
@@ -63,24 +63,33 @@ const ChaiForm = () => {
       {isModalOpen && (
         <AuthModal handleCloseModal={() => setIsModalOpen(false)} />
       )}
-      <section className="bg-slate-800">
-        <div className="max-w-6xl mx-auto text-white p-8  space-y-6">
-          <div className="flex items-center space-x-2 mb-6 mt-2">
-            <span className="text-2xl text-orange-400">✏️</span>
-            <h2 className="text-3xl font-semibold">Start Tracking Today</h2>
+      <section className="bg-gray-50 py-8 transition-colors duration-300 dark:bg-gray-900">
+        <div
+          className="max-w-md mx-4 sm:mx-auto text-gray-800 p-6 sm:p-8 lg:p-10 space-y-6 rounded-xl shadow-lg
+                         dark:bg-gray-800 dark:text-white dark:border dark:border-gray-700 md:max-w-[700px]"
+        >
+          <div className="flex items-center space-x-3 mb-6">
+            <i className="fas fa-edit text-3xl text-orange-500 dark:text-orange-400"></i>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">
+              Start Tracking Today
+            </h2>
           </div>
 
           <div>
-            <h4 className="mb-2 text-xl font-medium">Select chai type</h4>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <h4 className="mb-3 text-xl font-medium text-gray-800 dark:text-gray-200">
+              Select chai type
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {chaiOptions.slice(0, 5).map((option, optionIndex) => {
                 return (
                   <button
                     key={optionIndex}
                     className={
-                      "p-3 rounded-lg bg-gray-700 border-gray-600 text-left cursor-pointer flex flex-col justify-center items-center gap-2 transition-all duration-200 hover:scale-105 hover:border-orange-400 border-2 " +
+                      "p-4 rounded-lg text-center cursor-pointer flex flex-col justify-center items-center gap-2 transition-all duration-200 hover:scale-105 " +
+                      "bg-white border border-gray-200 hover:bg-gray-50 hover:border-orange-500 " +
+                      "dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:border-orange-400 " +
                       (option.name === selectedChai
-                        ? "border-orange-400 border-4"
+                        ? "border-orange-500 dark:border-orange-400 border-4 shadow-md"
                         : "")
                     }
                     onClick={() => {
@@ -88,8 +97,10 @@ const ChaiForm = () => {
                       setShowChaiTypes(false);
                     }}
                   >
-                    <h5 className="font-medium text-lg">{option.name}</h5>
-                    <p className="text-sm text-gray-300">
+                    <h5 className="font-medium text-lg text-gray-900 dark:text-white">
+                      {option.name}
+                    </h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       {option.caffeine} mg
                     </p>
                   </button>
@@ -97,16 +108,22 @@ const ChaiForm = () => {
               })}
               <button
                 className={
-                  "p-3 rounded-lg bg-gray-700 border-gray-600 text-left cursor-pointer flex flex-col justify-center items-center gap-2 transition-all duration-200 hover:scale-105 hover:border-orange-400 border-2 " +
-                  (showChaiTypes === true ? "border-orange-400 border-4" : "")
+                  "p-4 rounded-lg text-center cursor-pointer flex flex-col justify-center items-center gap-2 transition-all duration-200 hover:scale-105 " +
+                  "bg-white border border-gray-200 hover:bg-gray-50 hover:border-orange-500 " +
+                  "dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:border-orange-400 " +
+                  (showChaiTypes === true
+                    ? "border-orange-500 dark:border-orange-400 border-4 shadow-md"
+                    : "")
                 }
                 onClick={() => {
                   setShowChaiTypes(true);
                   setSelectedChai(false);
                 }}
               >
-                <h5 className="font-medium text-lg">Others</h5>
-                <p className="text-sm text-gray-300">N/A</p>
+                <h5 className="font-medium text-lg text-gray-900 dark:text-white">
+                  Others
+                </h5>
+                <p className="text-sm text-gray-600 dark:text-gray-300">N/A</p>
               </button>
             </div>
 
@@ -115,11 +132,16 @@ const ChaiForm = () => {
                 onChange={(event) => {
                   setSelectedChai(event.target.value);
                 }}
-                className="mt-3 w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-400 appearance-none"
+                className="mt-4 w-full bg-gray-100 text-gray-900 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none
+                           dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-orange-400 dark:[color-scheme:dark]"
               >
                 <option value={null}>Select type</option>
                 {chaiOptions.map((option, optionIndex) => (
-                  <option key={optionIndex} value={option.name}>
+                  <option
+                    key={optionIndex}
+                    value={option.name}
+                    className="dark:bg-gray-800 dark:text-white"
+                  >
                     {option.name} ({option.caffeine}mg)
                   </option>
                 ))}
@@ -128,7 +150,9 @@ const ChaiForm = () => {
           </div>
 
           <div>
-            <h4 className="mb-2 text-xl font-medium">Add the cost (₹)</h4>
+            <h4 className="mb-3 text-xl font-medium text-gray-800 dark:text-gray-200">
+              Add the cost (₹)
+            </h4>
             <input
               value={chaiCost}
               onChange={(event) => {
@@ -136,27 +160,43 @@ const ChaiForm = () => {
               }}
               type="number"
               placeholder="10"
-              className="w-full bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400 appearance-none rounded-lg p-2"
+              className="w-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none rounded-lg p-3
+                         text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-orange-400"
             />
           </div>
 
           <div>
-            <h4 className="mb-2 text-xl font-medium">Time since consumption</h4>
+            <h4 className="mb-3 text-xl font-medium text-gray-800 dark:text-gray-200">
+              Time since consumption
+            </h4>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="block text-md mb-1">Hours</label>
+                <label className="block text-md mb-2 text-gray-700 dark:text-gray-300">
+                  Hours
+                </label>
                 <select
                   onChange={(event) => {
                     setHour(event.target.value);
                   }}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2"
+                  className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500
+                             text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-orange-400 dark:[color-scheme:dark]"
                 >
+                  <option
+                    value={null}
+                    className="dark:bg-gray-800 dark:text-white"
+                  >
+                    Select Hours
+                  </option>
                   {[
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
                     17, 18, 19, 20, 21, 22, 23,
                   ].map((hour, hourIndex) => {
                     return (
-                      <option key={hourIndex} value={hour}>
+                      <option
+                        key={hourIndex}
+                        value={hour}
+                        className="dark:bg-gray-800 dark:text-white"
+                      >
                         {hour}
                       </option>
                     );
@@ -164,16 +204,29 @@ const ChaiForm = () => {
                 </select>
               </div>
               <div className="flex-1">
-                <label className="block text-md mb-1">Minutes</label>
+                <label className="block text-md mb-2 text-gray-700 dark:text-gray-300">
+                  Minutes
+                </label>
                 <select
                   onChange={(event) => {
                     setMin(event.target.value);
                   }}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2"
+                  className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500
+                             text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-orange-400 dark:[color-scheme:dark]"
                 >
+                  <option
+                    value={null}
+                    className="dark:bg-gray-800 dark:text-white"
+                  >
+                    Select Minutes
+                  </option>
                   {[0, 5, 10, 15, 30, 45].map((min, minIndex) => {
                     return (
-                      <option key={minIndex} value={min}>
+                      <option
+                        key={minIndex}
+                        value={min}
+                        className="dark:bg-gray-800 dark:text-white"
+                      >
                         {min}
                       </option>
                     );
@@ -185,7 +238,9 @@ const ChaiForm = () => {
 
           <button
             onClick={handleSubmitChaiForm}
-            className="w-full h-12 text-xl cursor-pointer bg-orange-500 hover:bg-orange-600 transition text-white font-semibold py-2 rounded-full shadow"
+            className="w-full h-12 text-xl cursor-pointer bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-all duration-200 ease-in-out text-white font-semibold py-2 rounded-full shadow-md
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:ring-offset-white
+                       dark:bg-orange-600 dark:hover:bg-orange-700 dark:active:bg-orange-800 dark:focus:ring-orange-600 dark:focus:ring-offset-gray-800"
           >
             Add Entry
           </button>
