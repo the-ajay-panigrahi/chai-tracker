@@ -17,12 +17,10 @@ const AuthModal = ({ handleCloseModal }) => {
   const handleAuth = async () => {
     try {
       if (!isSignup) {
-        console.log("account already hai....");
         await signin(email, password);
         setIsAuthenticated(true);
         handleCloseModal();
       } else {
-        console.log("account create karr raha hoon");
         await signup(email, password);
         setIsSignup(false);
         setEmail("");

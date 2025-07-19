@@ -34,7 +34,6 @@ const Header = () => {
                 if (isAuthenticated === false) {
                   setIsModalOpen(true);
                 } else {
-                  console.log("kkkk");
                   await signout();
                   setIsAuthenticated(false);
                 }
