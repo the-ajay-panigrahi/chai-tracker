@@ -78,7 +78,14 @@ Clone the repo and run locally:
 git clone https://github.com/the-ajay-panigrahi/chai-tracker.git
 cd chai-tracker
 npm install
-# Add your Firebase configuration details
-# (e.g., create a .env file and add firebase credentials as env variables)
 npm run dev
+```
+#### Create a .env file in the root directory of your project and add your Firebase credentials. Make sure to add your actual keys.
+```js
+VITE_FIREBASE_APIKEY=YOUR_FIREBASE_API_KEY = 
+VITE_FIREBASE_AUTHDOMAIN=YOUR_FIREBASE_AUTH_DOMAIN = 
+VITE_FIREBASE_PROJECTID=YOUR_FIREBASE_PROJECT_ID =
+VITE_FIREBASE_STORAGEBUCKET=YOUR_FIREBASE_STORAGE_BUCKET =
+VITE_FIREBASE_MESSAGINGSENDERID=YOUR_FIREBASE_MESSAGING_SENDER_ID =
+VITE_FIREBASE_APPID=YOUR_FIREBASE_APP_ID =
 ```
