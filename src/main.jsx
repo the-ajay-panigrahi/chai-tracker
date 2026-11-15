@@ -8,5 +8,3 @@ createRoot(document.getElementById("root")).render(
     <App />
   </AuthContextProvider>
 );
-
-import "./ui-refresh.css";
