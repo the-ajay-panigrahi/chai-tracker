@@ -1395,12 +1395,27 @@ select {
 .pill > span[aria-hidden="true"] {
   display: inline-grid;
   place-items: center;
-  width: 1em;
-  height: 1em;
-  flex: 0 0 1em;
-  font-size: 17px;
-  line-height: 1;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
   transform: translateY(-1px);
 }
-.header-actions .pill { gap: 10px; }
-.footer-poster .pill { gap: 18px; }
+.pill-arrow svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+  overflow: visible;
+}
+.pill-arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.header-actions .pill {
+  gap: 10px;
+}
+.footer-poster .pill {
+  gap: 18px;
+}

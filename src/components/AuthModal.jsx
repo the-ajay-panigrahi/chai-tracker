@@ -72,7 +72,11 @@ const AuthModal = ({ handleCloseModal }) => {
             : isSignup
               ? "Create account"
               : "Sign in"}
-          <span aria-hidden="true">↗</span>
+          <span className="pill-arrow" aria-hidden="true">
+            <svg viewBox="0 0 16 16" focusable="false">
+              <path d="M4 12 12 4M5 4h7v7" />
+            </svg>
+          </span>
         </button>
       </form>
       <p className="auth-switch">

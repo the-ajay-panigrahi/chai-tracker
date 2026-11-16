@@ -13,7 +13,12 @@ const Hero = () => (
       Track your cups, caffeine &amp; what it all costs.
     </p>
     <a href="#track" className="pill pill-light hero-cta">
-      Let’s log a chai <span aria-hidden="true">↘</span>
+      Let’s log a chai{" "}
+      <span className="pill-arrow" aria-hidden="true">
+        <svg viewBox="0 0 16 16" focusable="false">
+          <path d="M4 12 12 4M5 4h7v7" />
+        </svg>
+      </span>
     </a>
     <div className="hero-art">
       <div className="art-orbit" />
