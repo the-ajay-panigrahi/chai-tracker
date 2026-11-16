@@ -233,3 +233,40 @@ test("status boundaries and top tea counts stay consistent", async ({
   await expect(page.locator("tbody tr").first()).toContainText("Masala Chai");
   await expect(page.locator("tbody tr").first()).toContainText("66.67%");
 });
+
+test("supporting panels follow the theme and the clarity arrow is removed", async ({
+  page,
+}, testInfo) => {
+  await setup(page, true, seeded);
+  await expect(page.locator(".hand-note")).not.toContainText("⤴");
+  await expect(page.locator(".statistics")).toHaveCSS(
+    "background-color",
+    "rgb(243, 240, 232)",
+  );
+  await expect(page.locator(".footer-poster")).toHaveCSS(
+    "background-color",
+    "rgb(255, 253, 247)",
+  );
+  await audit(page);
+  await page.screenshot({
+    path: `test-results/${testInfo.project.name}-updated-light.png`,
+    fullPage: true,
+  });
+  await page.screenshot({
+    path: `test-results/${testInfo.project.name}-updated-hero.png`,
+  });
+  await page.getByRole("button", { name: "Switch to dark theme" }).click();
+  await expect(page.locator(".statistics")).toHaveCSS(
+    "background-color",
+    "rgb(54, 51, 48)",
+  );
+  await expect(page.locator(".footer-poster")).toHaveCSS(
+    "background-color",
+    "rgb(32, 32, 32)",
+  );
+  await audit(page);
+  await page.screenshot({
+    path: `test-results/${testInfo.project.name}-updated-dark.png`,
+    fullPage: true,
+  });
+});

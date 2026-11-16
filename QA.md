@@ -16,7 +16,7 @@ Verified 16 November 2026 against baseline `c3cc2cf`.
 
 - `npm run build`: production build.
 - `npm run lint`: no errors or warnings.
-- `npm test`: 12 Playwright tests across desktop Chromium and mobile Chromium, with 320px narrow layout coverage.
+- `npm test`: 14 Playwright tests across desktop Chromium and mobile Chromium, with 320px narrow layout coverage.
 - Guest auth gate; failed sign-in; sign-up confirmation; sign-in and sign-out states.
 - Chai selection, all additional chai options, decimal cost, backdated hours/minutes, merge-write payload, reset and failed-save retry state.
 - Caffeine decay, status categories, daily and total values, tea rankings and percentages, history order and detail modal.
@@ -35,3 +35,7 @@ The production build retains the existing large Firebase bundle warning. A compa
 ## Deployment
 
 The existing Vercel project is `chai-tracker`, connected to `the-ajay-panigrahi/chai-tracker`, production branch `main`, at https://chai-tracker.vercel.app/. No new hosting service, paid asset, plan upgrade or billing change is needed.
+
+## Theme polish
+
+Removed the decorative arrow beneath “your daily cup of clarity.” Statistics, its cards and table, and the closing footer panel now follow the selected light/dark theme. README screenshots were refreshed using sample records, and portfolio-v3’s saved Chai Tracker image was refreshed separately.

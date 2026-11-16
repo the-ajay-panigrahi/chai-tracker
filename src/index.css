@@ -337,13 +337,6 @@ select {
   line-height: 1;
   transform: rotate(10deg);
 }
-.hand-note span {
-  font-size: 44px;
-  display: block;
-  transform: rotate(100deg);
-  margin-left: 8px;
-  margin-top: 12px;
-}
 .edge-note {
   position: absolute;
   right: 0;
@@ -1179,9 +1172,6 @@ select {
     right: -6px;
     top: 27px;
   }
-  .hand-note span {
-    font-size: 32px;
-  }
   .spark-one {
     width: 38px;
     left: 1px;
@@ -1357,4 +1347,47 @@ select {
   .history-entry:hover {
     transform: none;
   }
+}
+
+/* Supporting panels follow the selected theme. */
+.statistics {
+  background: var(--wash);
+  color: var(--ink);
+}
+.active-caffeine {
+  background: var(--card);
+  border-color: var(--line);
+}
+.active-caffeine p,
+.active-caffeine > .small-label,
+.top-teas th {
+  color: var(--muted);
+}
+.stat {
+  background: var(--card);
+  color: var(--ink);
+}
+.top-teas td {
+  border-color: var(--line);
+}
+.tea-rank {
+  color: var(--ink);
+}
+.footer-poster {
+  background: var(--paper);
+  color: var(--ink);
+}
+.footer-poster .pill {
+  background: var(--ink);
+  color: var(--paper);
+}
+.footer-poster > svg {
+  color: var(--pink);
+}
+.dark .footer-poster > svg {
+  color: #d3e978;
+}
+.statistics :focus-visible,
+.footer-poster :focus-visible {
+  outline-color: var(--ink);
 }

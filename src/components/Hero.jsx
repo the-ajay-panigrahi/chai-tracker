@@ -23,7 +23,7 @@ const Hero = () => (
       <span className="hand-note">
         your daily
         <br />
-        cup of clarity <span aria-hidden="true">⤴</span>
+        cup of clarity
       </span>
     </div>
     <span className="edge-note">FOR THE LOVE OF CHAI</span>
