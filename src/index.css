@@ -1391,3 +1391,16 @@ select {
 .footer-poster :focus-visible {
   outline-color: var(--ink);
 }
+
+.pill > span[aria-hidden="true"] {
+  display: inline-grid;
+  place-items: center;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 1em;
+  font-size: 17px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+.header-actions .pill { gap: 10px; }
+.footer-poster .pill { gap: 18px; }
