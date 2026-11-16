@@ -20,13 +20,13 @@ Caffeine estimates use the existing five-hour half-life calculation and 48-hour 
 
 Light theme, with sample records:
 
-![Chai Tracker in light mode](./screenshots/image-1.png)
+![Chai Tracker in light mode](./screenshots/desktop-light.png)
 
 Dark theme, with the same sample records:
 
-![Chai Tracker in dark mode](./screenshots/image-2.png)
+![Chai Tracker in dark mode](./screenshots/desktop-dark.png)
 
-Screenshots use isolated test data, not personal records.
+Full desktop screenshots include the complete page, with padding on all four sides. They use isolated sample records, not personal records.
 
 ## Design
 
