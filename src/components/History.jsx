@@ -29,39 +29,53 @@ const History = () => {
   };
 
   return (
-    <section className="bg-gray-50 py-10 sm:py-12 transition-colors duration-300 dark:bg-gray-900">
-      <div className="max-w-screen-md mx-auto px-4 sm:px-6 md:max-w-[700px]">
-        <div className="flex items-center justify-center sm:justify-start gap-3 mb-6">
-          <i className="fas fa-history text-2xl sm:text-3xl text-orange-500 dark:text-orange-400"></i>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight text-center sm:text-left dark:text-white">
-            Chai Consumption History
-          </h2>
+    <section id="history" className="history section-space">
+      <div className="shell">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">03 / THE CUP COLLECTION</span>
+            <h2>
+              A little history.
+              <br />A lot of chai.
+            </h2>
+          </div>
+          <p>
+            Pick a cup to see its caffeine
+            <br />
+            details and cost breakdown.
+          </p>
         </div>
-
-        <p className="text-base sm:text-lg text-gray-600 mb-8 italic text-center sm:text-left dark:text-gray-300">
-          Click on any cup to view caffeine details and cost breakdown.
-        </p>
-
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6 justify-items-center">
+        <div className="history-grid">
           {Object.keys(globalData)
             .sort((a, b) => b - a)
             .map((utcTime, index) => (
-              <div
-                className="flex items-center justify-center"
-                key={index}
+              <button
+                className="history-entry"
+                key={utcTime}
                 onClick={() => handleChaiClick(utcTime)}
+                aria-label={`View ${globalData[utcTime].name}, ${new Date(Number(utcTime)).toLocaleString()}`}
               >
-                <img
-                  src="/chai-logo.png"
-                  alt="Chai"
-                  className="rounded-2xl p-2 bg-white shadow-md hover:shadow-orange-500 hover:scale-105 transition-all duration-300 cursor-pointer w-20 h-20 object-contain
-                             dark:bg-gray-800 dark:shadow-sm dark:hover:shadow-orange-400"
-                />
-              </div>
+                <span className="small-label">
+                  CUP{" "}
+                  {String(Object.keys(globalData).length - index).padStart(
+                    2,
+                    "0",
+                  )}
+                </span>
+                <img src="/chai-logo.png" alt="" />
+                <strong>{globalData[utcTime].name}</strong>
+                <span className="history-date">
+                  {new Date(Number(utcTime)).toLocaleDateString(undefined, {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}{" "}
+                  <span aria-hidden="true">↗</span>
+                </span>
+              </button>
             ))}
         </div>
       </div>
-
       <ChaiInfoModal
         info={selectedChai}
         onClose={() => setSelectedChai(null)}
@@ -69,5 +83,4 @@ const History = () => {
     </section>
   );
 };
-
 export default History;

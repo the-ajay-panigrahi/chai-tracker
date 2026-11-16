@@ -2,44 +2,56 @@ import { useContext, useState } from "react";
 import AuthModal from "./AuthModal";
 import { AuthContext } from "../utils/AuthContext";
 import ThemeBtn from "./ThemeBtn";
+import ChaiArt from "./ChaiArt";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isAuthenticated, signout, setIsAuthenticated } =
+  const { isAuthenticated, signout, setIsAuthenticated, globalData } =
     useContext(AuthContext);
-
   return (
     <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
       {isModalOpen && (
         <AuthModal handleCloseModal={() => setIsModalOpen(false)} />
       )}
-
-      <header className="bg-white text-gray-800 shadow sticky top-0 z-11 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
-        <div className="max-w-screen-md mx-auto flex justify-between items-center px-4 py-3 sm:py-4 md:max-w-[700px]">
-          <h1 className="text-xl sm:text-3xl font-bold text-orange-500 flex items-center gap-2 transition-colors duration-300 dark:text-orange-400">
-            <img
-              src="/chai-logo.png"
-              className="w-5 sm:w-10 object-contain hover:scale-110 cursor-pointer transition-transform duration-200 ease-in-out"
-              alt=""
-            />
-            Tracker
-          </h1>
-
-          <div className="flex items-center gap-3 sm:gap-4">
+      <header className="site-header">
+        <div className="shell header-inner">
+          <a className="brand" href="#" aria-label="Chai Tracker home">
+            <ChaiArt small />
+            <span>
+              chai<span className="brand-bottom">tracker</span>
+            </span>
+            <span className="brand-dot" aria-hidden="true">
+              ✳
+            </span>
+          </a>
+          <nav aria-label="Main navigation">
+            <a href="#track">Log a cup</a>
+            {isAuthenticated &&
+              globalData &&
+              Object.keys(globalData).length > 0 && (
+                <>
+                  <a href="#statistics">Statistics</a>
+                  <a href="#history">History</a>
+                </>
+              )}
+          </nav>
+          <div className="header-actions">
             <ThemeBtn />
-
             <button
-              className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 px-3 py-1.5 sm:px-5 sm:py-2 rounded-full text-sm sm:text-base transition-all duration-200 ease-in-out shadow-sm hover:shadow-md cursor-pointer font-medium text-white dark:bg-orange-600 dark:hover:bg-orange-700 dark:active:bg-orange-800 dark:focus:ring-orange-600"
+              className="pill pill-light"
               onClick={async () => {
-                if (isAuthenticated === false) {
-                  setIsModalOpen(true);
-                } else {
+                if (!isAuthenticated) setIsModalOpen(true);
+                else {
                   await signout();
                   setIsAuthenticated(false);
                 }
               }}
             >
-              {isAuthenticated ? "Signout" : "Signin"}
+              {isAuthenticated ? "Sign out" : "Sign in"}
+              <span aria-hidden="true">↗</span>
             </button>
           </div>
         </div>
@@ -47,5 +59,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;

@@ -4,6 +4,7 @@ import AuthModal from "./AuthModal.jsx";
 import { db } from "../../firebase.js";
 import { doc, setDoc } from "firebase/firestore";
 import { AuthContext } from "../utils/AuthContext.jsx";
+import { Spark } from "./ChaiArt";
 const ChaiForm = () => {
   const [selectedChai, setSelectedChai] = useState(null);
   const [showChaiTypes, setShowChaiTypes] = useState(false);
@@ -11,243 +12,214 @@ const ChaiForm = () => {
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [message, setMessage] = useState("");
   const { isAuthenticated, globalData, setGlobalData, currentUser } =
     useContext(AuthContext);
-
-  async function handleSubmitChaiForm() {
+  async function handleSubmitChaiForm(event) {
+    event.preventDefault();
     if (!isAuthenticated) {
       setIsModalOpen(true);
       return;
     }
-
     if (!selectedChai) {
+      setMessage("Select a chai type first.");
       return;
     }
-
+    setIsSaving(true);
+    setMessage("");
     try {
-      const newGlobalData = {
-        ...(globalData || {}),
-      };
-
+      const newGlobalData = { ...(globalData || {}) };
       const nowTime = Date.now();
       const timeToSubtract = hour * 60 * 60 * 1000 + min * 60 * 1000;
       const timestamp = nowTime - timeToSubtract;
-
-      const newData = {
-        name: selectedChai,
-        cost: chaiCost,
-      };
+      const newData = { name: selectedChai, cost: chaiCost };
       newGlobalData[timestamp] = newData;
-      setGlobalData(newGlobalData);
-
       const userRef = doc(db, "users", currentUser.uid);
-      await setDoc(
-        userRef,
-        {
-          [timestamp]: newData,
-        },
-        { merge: true }
-      );
-
+      await setDoc(userRef, { [timestamp]: newData }, { merge: true });
+      setGlobalData(newGlobalData);
       setSelectedChai(null);
       setHour(0);
       setMin(0);
       setChaiCost(0);
-    } catch (err) {
-      console.log(err.message);
+      setShowChaiTypes(false);
+      setMessage("One more cup, counted. Chai saved!");
+    } catch {
+      setMessage("Your chai couldn’t be saved. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   }
-
   return (
     <>
       {isModalOpen && (
         <AuthModal handleCloseModal={() => setIsModalOpen(false)} />
       )}
-      <section className="bg-gray-50 py-8 transition-colors duration-300 dark:bg-gray-900">
-        <div
-          className="max-w-md mx-4 sm:mx-auto text-gray-800 p-6 sm:p-8 lg:p-10 space-y-6 rounded-xl shadow-lg
-                         dark:bg-gray-800 dark:text-white dark:border dark:border-gray-700 md:max-w-[700px]"
-        >
-          <div className="flex items-center space-x-3 mb-6">
-            <i className="fas fa-edit text-3xl text-orange-500 dark:text-orange-400"></i>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">
-              Start Tracking Today
+      <section id="track" className="tracking section-space">
+        <div className="shell tracking-layout">
+          <div className="tracking-intro">
+            <span className="eyebrow">01 / THE DAILY RITUAL</span>
+            <h2>
+              Good chai.
+              <br />
+              Great records.
             </h2>
+            <p>
+              Masala, kadak, or something else?
+              <br />
+              Make a little note of your latest cup.
+            </p>
+            <aside className="caffeine-note">
+              <Spark />
+              <span className="eyebrow">A LITTLE CHAI KNOWLEDGE</span>
+              <h3>
+                Half now.
+                <br />
+                Half in 5 hours.
+              </h3>
+              <p>
+                Caffeine’s half-life is about 5 hours. Sip 100mg now, and about
+                50mg is still in your system 5 hours later.
+              </p>
+            </aside>
           </div>
-
-          <div>
-            <h4 className="mb-3 text-xl font-medium text-gray-800 dark:text-gray-200">
-              Select chai type
-            </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {chaiOptions.slice(0, 5).map((option, optionIndex) => {
-                return (
+          <form className="chai-form" onSubmit={handleSubmitChaiForm}>
+            <div className="form-heading">
+              <h3>Log a cup</h3>
+              <span className="small-label">FRESHLY BREWED?</span>
+            </div>
+            <fieldset>
+              <legend>
+                <span className="step">1</span> Select chai type
+              </legend>
+              <div className="chai-options">
+                {chaiOptions.slice(0, 5).map((option, index) => (
                   <button
-                    key={optionIndex}
-                    className={
-                      "p-4 rounded-lg text-center cursor-pointer flex flex-col justify-center items-center gap-2 transition-all duration-200 hover:scale-105 " +
-                      "bg-white border border-gray-200 hover:bg-gray-50 hover:border-orange-500 " +
-                      "dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:border-orange-400 " +
-                      (option.name === selectedChai
-                        ? "border-orange-500 dark:border-orange-400 border-4 shadow-md"
-                        : "")
-                    }
+                    type="button"
+                    key={option.name}
+                    className={`chai-option ${selectedChai === option.name ? "selected" : ""}`}
+                    aria-pressed={selectedChai === option.name}
                     onClick={() => {
                       setSelectedChai(option.name);
                       setShowChaiTypes(false);
+                      setMessage("");
                     }}
                   >
-                    <h5 className="font-medium text-lg text-gray-900 dark:text-white">
-                      {option.name}
-                    </h5>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {option.caffeine} mg
-                    </p>
+                    <span className="option-number" aria-hidden="true">
+                      0{index + 1}
+                    </span>
+                    <strong>{option.name}</strong>
+                    <span>{option.caffeine} mg caffeine</span>
+                    <span className="selection-mark" aria-hidden="true">
+                      {selectedChai === option.name ? "✓" : "+"}
+                    </span>
                   </button>
-                );
-              })}
-              <button
-                className={
-                  "p-4 rounded-lg text-center cursor-pointer flex flex-col justify-center items-center gap-2 transition-all duration-200 hover:scale-105 " +
-                  "bg-white border border-gray-200 hover:bg-gray-50 hover:border-orange-500 " +
-                  "dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:border-orange-400 " +
-                  (showChaiTypes === true
-                    ? "border-orange-500 dark:border-orange-400 border-4 shadow-md"
-                    : "")
-                }
-                onClick={() => {
-                  setShowChaiTypes(true);
-                  setSelectedChai(false);
-                }}
-              >
-                <h5 className="font-medium text-lg text-gray-900 dark:text-white">
-                  Others
-                </h5>
-                <p className="text-sm text-gray-600 dark:text-gray-300">N/A</p>
-              </button>
-            </div>
-
-            {showChaiTypes && (
-              <select
-                onChange={(event) => {
-                  setSelectedChai(event.target.value);
-                }}
-                className="mt-4 w-full bg-gray-100 text-gray-900 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none
-                           dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-orange-400 dark:[color-scheme:dark]"
-              >
-                <option value={null}>Select type</option>
-                {chaiOptions.map((option, optionIndex) => (
-                  <option
-                    key={optionIndex}
-                    value={option.name}
-                    className="dark:bg-gray-800 dark:text-white"
-                  >
-                    {option.name} ({option.caffeine}mg)
-                  </option>
                 ))}
-              </select>
-            )}
-          </div>
-
-          <div>
-            <h4 className="mb-3 text-xl font-medium text-gray-800 dark:text-gray-200">
-              Add the cost (₹)
-            </h4>
-            <input
-              value={chaiCost}
-              onChange={(event) => {
-                setChaiCost(event.target.value);
-              }}
-              type="number"
-              placeholder="10"
-              className="w-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none rounded-lg p-3
-                         text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-orange-400"
-            />
-          </div>
-
-          <div>
-            <h4 className="mb-3 text-xl font-medium text-gray-800 dark:text-gray-200">
-              Time since consumption
-            </h4>
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <label className="block text-md mb-2 text-gray-700 dark:text-gray-300">
-                  Hours
-                </label>
-                <select
-                  onChange={(event) => {
-                    setHour(event.target.value);
+                <button
+                  type="button"
+                  className={`chai-option other-option ${showChaiTypes ? "selected" : ""}`}
+                  aria-expanded={showChaiTypes}
+                  aria-controls="other-types"
+                  onClick={() => {
+                    setShowChaiTypes(true);
+                    setSelectedChai(false);
                   }}
-                  className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500
-                             text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-orange-400 dark:[color-scheme:dark]"
                 >
-                  <option
-                    value={null}
-                    className="dark:bg-gray-800 dark:text-white"
-                  >
-                    Select Hours
-                  </option>
-                  {[
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                    17, 18, 19, 20, 21, 22, 23,
-                  ].map((hour, hourIndex) => {
-                    return (
-                      <option
-                        key={hourIndex}
-                        value={hour}
-                        className="dark:bg-gray-800 dark:text-white"
-                      >
-                        {hour}
-                      </option>
-                    );
-                  })}
-                </select>
+                  <span className="option-number" aria-hidden="true">
+                    06
+                  </span>
+                  <strong>Others</strong>
+                  <span>Explore all types</span>
+                  <span className="selection-mark" aria-hidden="true">
+                    ↗
+                  </span>
+                </button>
               </div>
-              <div className="flex-1">
-                <label className="block text-md mb-2 text-gray-700 dark:text-gray-300">
-                  Minutes
+              {showChaiTypes && (
+                <div className="other-types" id="other-types">
+                  <label htmlFor="chai-type">Choose your chai</label>
+                  <select
+                    id="chai-type"
+                    value={selectedChai || ""}
+                    onChange={(event) => setSelectedChai(event.target.value)}
+                  >
+                    <option value="">Select type</option>
+                    {chaiOptions.map((option) => (
+                      <option key={option.name} value={option.name}>
+                        {option.name} ({option.caffeine}mg)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </fieldset>
+            <div className="form-bottom">
+              <div>
+                <label className="field-title" htmlFor="chai-cost">
+                  <span className="step">2</span> Add the cost
                 </label>
-                <select
-                  onChange={(event) => {
-                    setMin(event.target.value);
-                  }}
-                  className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500
-                             text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-orange-400 dark:[color-scheme:dark]"
-                >
-                  <option
-                    value={null}
-                    className="dark:bg-gray-800 dark:text-white"
-                  >
-                    Select Minutes
-                  </option>
-                  {[0, 5, 10, 15, 30, 45].map((min, minIndex) => {
-                    return (
-                      <option
-                        key={minIndex}
-                        value={min}
-                        className="dark:bg-gray-800 dark:text-white"
-                      >
-                        {min}
-                      </option>
-                    );
-                  })}
-                </select>
+                <div className="money-input">
+                  <span aria-hidden="true">₹</span>
+                  <input
+                    id="chai-cost"
+                    aria-label="Cost in rupees"
+                    type="number"
+                    step="any"
+                    value={chaiCost}
+                    onChange={(event) => setChaiCost(event.target.value)}
+                  />
+                </div>
               </div>
+              <fieldset>
+                <legend>
+                  <span className="step">3</span> How long ago?
+                </legend>
+                <div className="time-inputs">
+                  <div>
+                    <label htmlFor="chai-hours">Hours</label>
+                    <select
+                      id="chai-hours"
+                      value={hour}
+                      onChange={(event) => setHour(event.target.value)}
+                    >
+                      {Array.from({ length: 24 }, (_, i) => (
+                        <option key={i} value={i}>
+                          {i}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="chai-minutes">Minutes</label>
+                    <select
+                      id="chai-minutes"
+                      value={min}
+                      onChange={(event) => setMin(event.target.value)}
+                    >
+                      {[0, 5, 10, 15, 30, 45].map((value) => (
+                        <option key={value} value={value}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
-          </div>
-
-          <button
-            onClick={handleSubmitChaiForm}
-            className="w-full h-12 text-xl cursor-pointer bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-all duration-200 ease-in-out text-white font-semibold py-2 rounded-full shadow-md
-                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:ring-offset-white
-                       dark:bg-orange-600 dark:hover:bg-orange-700 dark:active:bg-orange-800 dark:focus:ring-orange-600 dark:focus:ring-offset-gray-800"
-          >
-            Add Entry
-          </button>
+            <button className="pill pill-dark submit-chai" disabled={isSaving}>
+              {isSaving ? "Saving your chai…" : "Add entry"}
+              <span aria-hidden="true">↗</span>
+            </button>
+            <p className="form-message" role="status">
+              {message ||
+                (!isAuthenticated
+                  ? "Sign in to save your cups and keep them with you."
+                  : "A little ritual. A lasting record.")}
+            </p>
+          </form>
         </div>
       </section>
     </>
   );
 };
-
 export default ChaiForm;

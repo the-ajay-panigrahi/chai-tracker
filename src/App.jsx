@@ -6,7 +6,6 @@ import Hero from "./components/Hero";
 import History from "./components/History";
 import Statistics from "./components/Statistics";
 import { AuthContext } from "./utils/AuthContext";
-
 const App = () => {
   const { isAuthenticated, globalData } = useContext(AuthContext);
   const dataExists =
@@ -14,17 +13,18 @@ const App = () => {
   return (
     <>
       <Header />
-      <Hero />
-      <ChaiForm />
-      {dataExists && (
-        <>
-          <Statistics />
-          <History />
-        </>
-      )}
+      <main id="main">
+        <Hero />
+        <ChaiForm />
+        {dataExists && (
+          <>
+            <Statistics />
+            <History />
+          </>
+        )}
+      </main>
       <Footer />
     </>
   );
 };
-
 export default App;

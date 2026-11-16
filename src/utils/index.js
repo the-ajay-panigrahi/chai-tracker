@@ -195,7 +195,7 @@ export function calculateChaiStats(chaiConsumptionHistory) {
     }
 
     const days = Object.keys(dailyStats).length;;
-    for (const [date, stats] of Object.entries(dailyStats)) {
+    for (const stats of Object.values(dailyStats)) {
         if (stats.caffeine > 0) {
             totalCaffeine += stats.caffeine
             totalDaysWithTea += 1; // Count days when caffeine was consumed

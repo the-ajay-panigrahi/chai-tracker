@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
+// This shared context is intentionally exported with its provider.
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext({});
 
 const AuthContextProvider = ({ children }) => {

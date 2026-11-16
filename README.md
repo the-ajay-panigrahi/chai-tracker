@@ -39,7 +39,7 @@ I built Chai Tracker to create a practical and enjoyable way for tea lovers to b
 
 ## 🧱 Challenges & Lessons
 
--   **Real-time Data Synchronization:** Integrating Firebase's real-time database to ensure immediate updates across the application for caffeine levels and history.
+-   **Real-time Data Synchronization:** Using Firebase Authentication and Cloud Firestore to save each user's chai entries and load them when they sign in.
 -   **Dynamic Caffeine Calculation:** Implementing a robust logic to accurately calculate and display dynamic caffeine levels based on consumption time and type.
 -   **Intuitive UI/UX Design:** Crafting a clean, fast, and mobile-responsive interface that makes daily logging effortless and provides clear visual feedback.
 
@@ -57,7 +57,7 @@ I built Chai Tracker to create a practical and enjoyable way for tea lovers to b
 
 -   **React** – Frontend Library
 -   **Tailwind CSS** – Utility-first styling
--   **Firebase** – Authentication & Realtime Database
+-   **Firebase** – Authentication & Cloud Firestore
 -   Deployed with **Vercel**
 
 ---
@@ -89,3 +89,10 @@ VITE_FIREBASE_STORAGEBUCKET=YOUR_FIREBASE_STORAGE_BUCKET =
 VITE_FIREBASE_MESSAGINGSENDERID=YOUR_FIREBASE_MESSAGING_SENDER_ID =
 VITE_FIREBASE_APPID=YOUR_FIREBASE_APP_ID =
 ```
+
+
+## Redesign and checks
+
+The interface follows the supplied [design guide](./DESIGN.md), with locally hosted Bricolage Grotesque and original chai illustrations.
+
+Run `npm run lint`, `npm run build`, and `npm test`. Install the browser once with `npx playwright install chromium`. Browser tests use isolated Firebase adapters and never write to production. See [QA.md](./QA.md) for coverage and limits.
